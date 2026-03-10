@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>確認画面</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      line-height: 1.6;
+      margin: 40px auto;
+      max-width: 720px;
+      padding: 0 16px;
+    }
+    .card {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 24px;
+    }
+    dl {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 12px 16px;
+    }
+    dt {
+      font-weight: bold;
+    }
+    dd {
+      margin: 0;
+    }
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    button, a.button {
+      padding: 12px 20px;
+      border: 1px solid #222;
+      border-radius: 6px;
+      background: #fff;
+      color: #000;
+      text-decoration: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="card">
+      <h1>申請内容の確認</h1>
+      <p>以下の内容でよければ送信してください。</p>
+
+      <dl>
+        <dt>申請者氏名</dt>
+        <dd id="confirm-name"></dd>
+
+        <dt>生年月日</dt>
+        <dd id="confirm-birthdate"></dd>
+
+        <dt>住所</dt>
+        <dd id="confirm-address"></dd>
+
+        <dt>電話番号</dt>
+        <dd id="confirm-phone"></dd>
+      </dl>
+
+      <div class="actions">
+        <button id="submit-button" type="button">送信する</button>
+        <a class="button" href="./form.html">入力画面へ戻る</a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const name = sessionStorage.getItem('application_name');
+    const birthdate = sessionStorage.getItem('application_birthdate');
+    const address = sessionStorage.getItem('application_address');
+    const phone = sessionStorage.getItem('application_phone');
+
+    if (!name || !birthdate || !address) {
+      window.location.href = './form.html';
+    }
+
+    document.getElementById('confirm-name').textContent = name || '';
+    document.getElementById('confirm-birthdate').textContent = birthdate || '';
+    document.getElementById('confirm-address').textContent = address || '';
+    document.getElementById('confirm-phone').textContent = phone || '未入力';
+
+    document.getElementById('submit-button').addEventListener('click', () => {
+      window.location.href = './done.html';
+    });
+  </script>
+</body>
+</html>

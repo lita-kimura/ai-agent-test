@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>申請フォーム</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      line-height: 1.6;
+      margin: 40px auto;
+      max-width: 720px;
+      padding: 0 16px;
+    }
+    form {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 24px;
+    }
+    .field {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    input, textarea {
+      width: 100%;
+      max-width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+    .note {
+      font-size: 14px;
+      color: #555;
+      margin-top: 6px;
+    }
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    button, a.button {
+      padding: 12px 20px;
+      border: 1px solid #222;
+      border-radius: 6px;
+      background: #fff;
+      color: #000;
+      text-decoration: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .error {
+      color: #b00020;
+      font-weight: bold;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>申請フォーム</h1>
+    <p>以下の項目を入力してください。</p>
+
+    <form id="application-form" novalidate>
+      <div id="error-message" class="error" aria-live="polite"></div>
+
+      <div class="field">
+        <label for="name">申請者氏名</label>
+        <input id="name" name="name" type="text" autocomplete="name" required />
+      </div>
+
+      <div class="field">
+        <label for="birthdate">生年月日</label>
+        <input id="birthdate" name="birthdate" type="date" required />
+      </div>
+
+      <div class="field">
+        <label for="address">住所</label>
+        <textarea id="address" name="address" rows="4" required></textarea>
+      </div>
+
+      <div class="field">
+        <label for="phone">電話番号</label>
+        <input id="phone" name="phone" type="tel" autocomplete="tel" />
+        <div class="note">電話番号は任意です。</div>
+      </div>
+
+      <div class="actions">
+        <button type="submit">確認画面へ進む</button>
+        <a class="button" href="./index.html">トップへ戻る</a>
+      </div>
+    </form>
+  </main>
+
+  <script>
+    const form = document.getElementById('application-form');
+    const errorMessage = document.getElementById('error-message');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      errorMessage.textContent = '';
+
+      const name = document.getElementById('name').value.trim();
+      const birthdate = document.getElementById('birthdate').value.trim();
+      const address = document.getElementById('address').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+
+      if (!name || !birthdate || !address) {
+        errorMessage.textContent = '必須項目を入力してください。';
+        return;
+      }
+
+      sessionStorage.setItem('application_name', name);
+      sessionStorage.setItem('application_birthdate', birthdate);
+      sessionStorage.setItem('application_address', address);
+      sessionStorage.setItem('application_phone', phone);
+
+      window.location.href = './confirm.html';
+    });
+  </script>
+</body>
+</html>
